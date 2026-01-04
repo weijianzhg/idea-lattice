@@ -1,0 +1,41 @@
+{
+  "description": "Manual cross-links between mental models. These create the 'lattice' connections across domains.",
+  "crosslinks": [
+    {
+      "source": "kelly-criterion",
+      "target": "bayes-theorem",
+      "reason": "Kelly uses Bayesian probability estimation for optimal betting"
+    },
+    {
+      "source": "kelly-criterion",
+      "target": "prospect-theory",
+      "reason": "Both deal with decision-making under uncertainty"
+    },
+    {
+      "source": "compound-interest",
+      "target": "big-debt-cycle",
+      "reason": "Compound interest drives debt accumulation in economic cycles"
+    },
+    {
+      "source": "entropy",
+      "target": "distributions",
+      "reason": "Entropy measures uncertainty in probability distributions"
+    },
+    {
+      "source": "entropy",
+      "target": "bayes-theorem",
+      "reason": "Information theory and Bayesian inference share mathematical foundations"
+    },
+    {
+      "source": "the-power-of-incentives",
+      "target": "prospect-theory",
+      "reason": "Both explain human behavior and decision-making"
+    },
+    {
+      "source": "recursion",
+      "target": "entropy",
+      "reason": "Recursive structures appear in information theory and compression"
+    }
+  ]
+}
+
