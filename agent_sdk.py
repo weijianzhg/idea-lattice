@@ -24,6 +24,7 @@ from pathlib import Path
 
 from bedrock_agentcore.runtime import BedrockAgentCoreApp
 from strands import Agent, tool
+from strands.models import BedrockModel
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Data Loading (reused from generate_graph.py)
@@ -330,7 +331,15 @@ When users ask about mental models:
 Be helpful, educational, and encourage users to explore the interconnections between different mental models."""
 
 app = BedrockAgentCoreApp()
+
+# Use Claude 4.5 Haiku for cost efficiency ($1/M input, $5/M output)
+model = BedrockModel(
+    model_id="anthropic.claude-haiku-4-5-20251001-v1:0",
+    region_name="eu-west-1",
+)
+
 agent = Agent(
+    model=model,
     system_prompt=SYSTEM_PROMPT,
     tools=[list_mental_models, search_mental_models, get_mental_model, get_model_connections],
 )
