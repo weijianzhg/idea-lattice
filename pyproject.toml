@@ -4,8 +4,10 @@ version = "0.1.0"
 description = "Interactive knowledge graph visualization from Substack RSS feeds"
 readme = "README.md"
 license = { text = "MIT" }
-requires-python = ">=3.9"
-dependencies = []
+requires-python = ">=3.10"
+dependencies = [
+    "strands-agents",
+]
 
 [build-system]
 requires = ["hatchling"]

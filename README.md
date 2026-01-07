@@ -3,7 +3,7 @@
 An interactive visualization of mental models as an interconnected knowledge graph.
 
 ![Graph Preview](https://img.shields.io/badge/D3.js-Interactive-blue)
-![Python](https://img.shields.io/badge/Python-3.9+-green)
+![Python](https://img.shields.io/badge/Python-3.10+-green)
 
 ## Features
 
@@ -116,7 +116,7 @@ your-website/
 
 ## Requirements
 
-- Python 3.9+
+- Python 3.10+
 - [uv](https://docs.astral.sh/uv/) (recommended) or pip
 - Modern browser with JavaScript enabled
 
