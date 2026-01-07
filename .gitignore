@@ -23,3 +23,14 @@ Thumbs.db
 # Downloaded RSS feed (regenerate with curl)
 *.xml
 
+# AgentCore config (contains AWS account IDs and ARNs)
+.bedrock_agentcore.yaml
+.bedrock_agentcore/
+
+# Environment files
+.env
+.env.*
+
+# Temporary/reference files
+agent-core.txt
+
