@@ -7,6 +7,11 @@ license = { text = "MIT" }
 requires-python = ">=3.10"
 dependencies = [
     "strands-agents",
+    "fastapi",
+    "uvicorn[standard]",
+    "pydantic",
+    "bedrock-agentcore>=1.1.3",
+    "bedrock-agentcore-starter-toolkit>=0.2.5",
 ]
 
 [build-system]
@@ -15,8 +20,8 @@ build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
 packages = ["."]
-only-include = ["generate_graph.py"]
+only-include = ["generate_graph.py", "agent_sdk.py"]
 
 [tool.hatch.build.targets.sdist]
-only-include = ["generate_graph.py", "pyproject.toml", "README.md", "LICENSE"]
+only-include = ["generate_graph.py", "agent_sdk.py", "pyproject.toml", "README.md", "LICENSE"]
 

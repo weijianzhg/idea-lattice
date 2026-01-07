@@ -13,6 +13,7 @@ An interactive visualization of mental models as an interconnected knowledge gra
 - **Clickable nodes** — click any post to open it in a new tab
 - **Smooth interactions** — hover highlights, drag to rearrange, scroll to zoom
 - **Dark theme** — elegant design ready to embed
+- **AgentCore-compatible** — Deploy as a Strands agent on Amazon Bedrock AgentCore
 
 ## Quick Start
 
@@ -135,7 +136,8 @@ brew install uv
 ```
 idea-lattice/
 ├── pyproject.toml                                 # Project config (uv/pip)
-├── generate_graph.py                              # Generator script
+├── generate_graph.py                              # Graph generator script
+├── agent_sdk.py                                   # Strands agent for AgentCore
 ├── lattice-graph.html                             # Output visualization
 ├── crosslinks.json                                # Manual cross-links
 ├── latticeworkofmodels.substack.com_feed.xml      # Your RSS feed
@@ -168,6 +170,48 @@ idea-lattice/
 3. **Graph Construction** — Creates hub nodes (domains) + post nodes with connections
 4. **D3.js Rendering** — Force-directed layout with physics simulation
 5. **Interactivity** — Mouse events for hover, click, drag, and zoom
+
+## AgentCore Deployment
+
+Deploy the Strands agent to Amazon Bedrock AgentCore Runtime using direct code deploy (no Docker required).
+
+### Configure
+
+```bash
+uv run agentcore configure \
+  --entrypoint agent_sdk.py \
+  --name my_agent \
+  --region eu-west-1 \
+  --deployment-type direct_code_deploy \
+  --non-interactive
+```
+
+### Deploy
+
+```bash
+uv run agentcore launch
+```
+
+### Test
+
+```bash
+# Invoke the agent
+uv run agentcore invoke '{"prompt": "What is a mental model?"}'
+
+# Check status
+uv run agentcore status
+```
+
+### Run Locally (optional)
+
+```bash
+uv run python agent_sdk.py
+
+# Test
+curl -X POST http://localhost:8080/invocations \
+  -H "Content-Type: application/json" \
+  -d '{"prompt": "Hello!"}'
+```
 
 ## License
 
