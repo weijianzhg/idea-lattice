@@ -26,6 +26,10 @@ curl -o latticeworkofmodels.substack.com_feed.xml \
 ### 2. Generate the visualization
 
 ```bash
+# Using uv (recommended)
+uv run generate_graph.py
+
+# Or with standard Python
 python generate_graph.py
 ```
 
@@ -112,13 +116,25 @@ your-website/
 
 ## Requirements
 
-- Python 3.9+ (no external dependencies!)
+- Python 3.9+
+- [uv](https://docs.astral.sh/uv/) (recommended) or pip
 - Modern browser with JavaScript enabled
+
+### Install uv (optional)
+
+```bash
+# macOS/Linux
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# Or with Homebrew
+brew install uv
+```
 
 ## File Structure
 
 ```
 idea-lattice/
+├── pyproject.toml                                 # Project config (uv/pip)
 ├── generate_graph.py                              # Generator script
 ├── lattice-graph.html                             # Output visualization
 ├── crosslinks.json                                # Manual cross-links
@@ -139,7 +155,7 @@ idea-lattice/
 
 3. **Regenerate:**
    ```bash
-   python generate_graph.py
+   uv run generate_graph.py
    ```
 
 4. **Deploy:**
