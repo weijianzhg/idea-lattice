@@ -99,7 +99,7 @@ def cors_headers():
     """Return CORS headers for browser access."""
     return {
         "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Origin": "https://weijian.ai",
         "Access-Control-Allow-Headers": "Content-Type,Authorization",
         "Access-Control-Allow-Methods": "POST,OPTIONS"
     }

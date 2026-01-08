@@ -184,7 +184,7 @@ def create_or_update_api_gateway(apigateway_client, lambda_arn, account_id):
             Name=API_NAME,
             ProtocolType="HTTP",
             CorsConfiguration={
-                "AllowOrigins": ["*"],
+                "AllowOrigins": ["https://weijian.ai"],
                 "AllowMethods": ["POST", "OPTIONS"],
                 "AllowHeaders": ["Content-Type", "Authorization"],
                 "MaxAge": 86400
