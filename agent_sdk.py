@@ -332,9 +332,9 @@ Be helpful, educational, and encourage users to explore the interconnections bet
 
 app = BedrockAgentCoreApp()
 
-# Use Claude 4.5 Haiku for cost efficiency ($1/M input, $5/M output)
+# Use Claude 4.5 Haiku via global inference profile
 model = BedrockModel(
-    model_id="anthropic.claude-haiku-4-5-20251001-v1:0",
+    model_id="global.anthropic.claude-haiku-4-5-20251001-v1:0",
     region_name="eu-west-1",
 )
 
