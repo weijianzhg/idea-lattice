@@ -220,6 +220,38 @@ def generate_html(posts: list[dict], crosslinks: list[dict]) -> str:
             background: linear-gradient(to bottom, var(--bg-0) 0%, transparent 100%);
             pointer-events: none;
             z-index: 10;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .back-button {
+            pointer-events: auto;
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-md);
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all var(--duration-default) var(--ease-default);
+            text-decoration: none;
+            color: var(--text-2);
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .back-button:hover {
+            background: var(--bg-2);
+            border-color: var(--accent-400);
+            color: var(--accent-400);
+            transform: translateX(-2px);
+        }
+
+        .header-content {
+            flex: 1;
         }
 
         .header h1 {
@@ -432,8 +464,11 @@ def generate_html(posts: list[dict], crosslinks: list[dict]) -> str:
         <svg id="graph-canvas"></svg>
 
         <div class="header">
-            <h1>Latticework of Mental Models</h1>
-            <p>An interconnected knowledge graph</p>
+            <a href="/" class="back-button" title="Back to home">&larr;</a>
+            <div class="header-content">
+                <h1>Latticework of Mental Models</h1>
+                <p>An interconnected knowledge graph</p>
+            </div>
         </div>
 
         <div class="legend" id="legend"></div>
