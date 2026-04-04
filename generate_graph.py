@@ -149,24 +149,39 @@ def generate_html(posts: list[dict], crosslinks: list[dict]) -> str:
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Latticework of Mental Models</title>
     <script src="https://d3js.org/d3.v7.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Crimson+Pro:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-primary: #0d1117;
-            --bg-secondary: #161b22;
-            --bg-tertiary: #21262d;
-            --text-primary: #e6edf3;
-            --text-secondary: #8b949e;
-            --text-muted: #484f58;
-            --accent-blue: #58a6ff;
-            --accent-purple: #bc8cff;
-            --accent-green: #3fb950;
-            --accent-orange: #d29922;
-            --accent-pink: #f778ba;
-            --accent-cyan: #39d1d1;
-            --accent-red: #f85149;
-            --link-default: rgba(139, 148, 158, 0.25);
-            --link-hover: rgba(88, 166, 255, 0.6);
+            --bg-0: #0B0D10;
+            --bg-1: #11151A;
+            --bg-2: #171C22;
+            --bg-3: #1E242C;
+            --border: #27303A;
+            --border-subtle: #1E242C;
+            --text-1: #F3F5F7;
+            --text-2: #A8B3C2;
+            --text-3: #6B7A8D;
+            --accent-50: #EEF2FF;
+            --accent-300: #A5B4FC;
+            --accent-400: #818CF8;
+            --accent-500: #6366F1;
+            --accent-600: #4F46E5;
+            --accent-800: #3730A3;
+            --accent-950: #1E1B4B;
+            --success: #34D399;
+            --warning: #FBBF24;
+            --error: #F87171;
+            --info: #60A5FA;
+            --link-default: rgba(99, 102, 241, 0.2);
+            --link-hover: rgba(99, 102, 241, 0.6);
+            --radius-sm: 6px;
+            --radius-md: 10px;
+            --radius-lg: 16px;
+            --duration-micro: 150ms;
+            --duration-default: 200ms;
+            --duration-expand: 300ms;
+            --ease-default: cubic-bezier(0.25, 0.1, 0.25, 1);
+            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.25);
         }
 
         * {
@@ -176,9 +191,9 @@ def generate_html(posts: list[dict], crosslinks: list[dict]) -> str:
         }
 
         body {
-            font-family: 'Crimson Pro', Georgia, serif;
-            background: var(--bg-primary);
-            color: var(--text-primary);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--bg-0);
+            color: var(--text-1);
             overflow: hidden;
             height: 100vh;
             width: 100vw;
@@ -202,23 +217,55 @@ def generate_html(posts: list[dict], crosslinks: list[dict]) -> str:
             left: 0;
             right: 0;
             padding: 24px 32px;
-            background: linear-gradient(to bottom, var(--bg-primary) 0%, transparent 100%);
+            background: linear-gradient(to bottom, var(--bg-0) 0%, transparent 100%);
             pointer-events: none;
             z-index: 10;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .back-button {
+            pointer-events: auto;
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-md);
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all var(--duration-default) var(--ease-default);
+            text-decoration: none;
+            color: var(--text-2);
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .back-button:hover {
+            background: var(--bg-2);
+            border-color: var(--accent-400);
+            color: var(--accent-400);
+            transform: translateX(-2px);
+        }
+
+        .header-content {
+            flex: 1;
         }
 
         .header h1 {
-            font-family: 'Crimson Pro', Georgia, serif;
-            font-size: 1.8rem;
-            font-weight: 500;
-            color: var(--text-primary);
-            letter-spacing: 0.02em;
+            font-family: 'Inter', -apple-system, sans-serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-1);
+            letter-spacing: -0.025em;
         }
 
         .header p {
             font-family: 'JetBrains Mono', monospace;
             font-size: 0.75rem;
-            color: var(--text-secondary);
+            color: var(--text-3);
             margin-top: 6px;
             letter-spacing: 0.04em;
         }
@@ -232,12 +279,12 @@ def generate_html(posts: list[dict], crosslinks: list[dict]) -> str:
             gap: 10px;
             font-family: 'JetBrains Mono', monospace;
             font-size: 0.7rem;
-            color: var(--text-secondary);
+            color: var(--text-2);
             z-index: 10;
-            background: rgba(13, 17, 23, 0.85);
+            background: rgba(11, 13, 16, 0.85);
             padding: 16px 20px;
-            border-radius: 12px;
-            border: 1px solid var(--bg-tertiary);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border);
             backdrop-filter: blur(12px);
         }
 
@@ -265,20 +312,20 @@ def generate_html(posts: list[dict], crosslinks: list[dict]) -> str:
             top: 0;
             left: 0;
             pointer-events: none;
-            background: var(--bg-secondary);
-            border: 1px solid var(--bg-tertiary);
-            border-radius: 10px;
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
             padding: 14px 18px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.72rem;
-            color: var(--text-primary);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+            font-family: 'Inter', -apple-system, sans-serif;
+            font-size: 0.8rem;
+            color: var(--text-1);
+            box-shadow: var(--shadow-md);
             opacity: 0;
             z-index: 100;
             max-width: 320px;
             backdrop-filter: blur(12px);
             will-change: transform, opacity;
-            transition: opacity 0.15s ease-out;
+            transition: opacity var(--duration-micro) var(--ease-default);
         }
 
         .tooltip.visible {
@@ -287,40 +334,39 @@ def generate_html(posts: list[dict], crosslinks: list[dict]) -> str:
 
         .tooltip-title {
             font-weight: 600;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             margin-bottom: 8px;
-            color: var(--accent-blue);
-            font-family: 'Crimson Pro', Georgia, serif;
+            color: var(--accent-300);
         }
 
         .tooltip-domain {
             display: inline-block;
             padding: 3px 8px;
-            border-radius: 4px;
+            border-radius: var(--radius-sm);
             font-size: 0.65rem;
+            font-weight: 500;
             text-transform: uppercase;
             letter-spacing: 0.08em;
             margin-bottom: 8px;
         }
 
         .tooltip-description {
-            color: var(--text-secondary);
+            color: var(--text-2);
             line-height: 1.5;
             margin-bottom: 10px;
-            font-family: 'Crimson Pro', Georgia, serif;
-            font-size: 0.82rem;
+            font-size: 0.8rem;
         }
 
         .tooltip-date {
-            color: var(--text-muted);
+            color: var(--text-3);
             font-size: 0.65rem;
         }
 
         .tooltip-hint {
             margin-top: 10px;
             padding-top: 10px;
-            border-top: 1px solid var(--bg-tertiary);
-            color: var(--accent-green);
+            border-top: 1px solid var(--border);
+            color: var(--success);
             font-size: 0.65rem;
         }
 
@@ -330,23 +376,23 @@ def generate_html(posts: list[dict], crosslinks: list[dict]) -> str:
             right: 32px;
             font-family: 'JetBrains Mono', monospace;
             font-size: 0.65rem;
-            color: var(--text-muted);
+            color: var(--text-3);
             text-align: right;
             z-index: 10;
         }
 
         .instructions kbd {
-            background: var(--bg-tertiary);
+            background: var(--bg-2);
             padding: 2px 6px;
-            border-radius: 4px;
-            border: 1px solid var(--text-muted);
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border);
             font-family: inherit;
         }
 
         .node-label {
-            font-family: 'JetBrains Mono', monospace;
+            font-family: 'Inter', -apple-system, sans-serif;
             font-size: 11px;
-            fill: var(--text-secondary);
+            fill: var(--text-2);
             pointer-events: none;
             text-anchor: middle;
             dominant-baseline: middle;
@@ -354,7 +400,7 @@ def generate_html(posts: list[dict], crosslinks: list[dict]) -> str:
 
         .node-label.hub {
             font-weight: 600;
-            fill: var(--text-primary);
+            fill: var(--text-1);
             font-size: 12px;
         }
 
@@ -365,9 +411,9 @@ def generate_html(posts: list[dict], crosslinks: list[dict]) -> str:
             right: 0;
             bottom: 0;
             background:
-                radial-gradient(ellipse at 20% 80%, rgba(88, 166, 255, 0.05) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 20%, rgba(188, 140, 255, 0.05) 0%, transparent 50%),
-                radial-gradient(ellipse at 50% 50%, rgba(63, 185, 80, 0.03) 0%, transparent 60%);
+                radial-gradient(ellipse at 20% 80%, rgba(99, 102, 241, 0.06) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, rgba(129, 140, 248, 0.04) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(79, 70, 229, 0.03) 0%, transparent 60%);
             pointer-events: none;
             z-index: 0;
         }
@@ -376,7 +422,7 @@ def generate_html(posts: list[dict], crosslinks: list[dict]) -> str:
             stroke: var(--link-default);
             stroke-width: 1.5;
             fill: none;
-            transition: opacity 0.2s ease-out, stroke 0.2s ease-out;
+            transition: opacity var(--duration-default) var(--ease-default), stroke var(--duration-default) var(--ease-default);
         }
 
         .link.cross-link {
@@ -395,7 +441,7 @@ def generate_html(posts: list[dict], crosslinks: list[dict]) -> str:
         }
 
         .node-circle {
-            transition: opacity 0.2s ease-out;
+            transition: opacity var(--duration-default) var(--ease-default);
         }
 
         .node.dimmed .node-circle {
@@ -418,8 +464,11 @@ def generate_html(posts: list[dict], crosslinks: list[dict]) -> str:
         <svg id="graph-canvas"></svg>
 
         <div class="header">
-            <h1>Latticework of Mental Models</h1>
-            <p>An interconnected knowledge graph</p>
+            <a href="/" class="back-button" title="Back to home">&larr;</a>
+            <div class="header-content">
+                <h1>Latticework of Mental Models</h1>
+                <p>An interconnected knowledge graph</p>
+            </div>
         </div>
 
         <div class="legend" id="legend"></div>
@@ -439,18 +488,18 @@ def generate_html(posts: list[dict], crosslinks: list[dict]) -> str:
 
         // Domain color palette (auto-assigned)
         const colorPalette = [
-            "#58a6ff", // blue
-            "#3fb950", // green
-            "#d29922", // orange
-            "#39d1d1", // cyan
-            "#f778ba", // pink
-            "#f85149", // red
-            "#a371f7", // violet
-            "#7ee787", // lime
+            "#60A5FA", // info blue
+            "#34D399", // success green
+            "#FBBF24", // warning amber
+            "#818CF8", // accent indigo
+            "#F87171", // error rose
+            "#A5B4FC", // accent light
+            "#67E8F9", // cyan
+            "#C084FC", // violet
         ];
 
         const domains = [...new Set(posts.map(p => p.domain))];
-        const domainColors = { "Hub": "#bc8cff" };
+        const domainColors = { "Hub": "#6366F1" };
         domains.forEach((d, i) => {
             domainColors[d] = colorPalette[i % colorPalette.length];
         });
