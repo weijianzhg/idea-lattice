@@ -38,11 +38,6 @@
     },
     {
       "source": "game-theory",
-      "target": "bayes-theorem",
-      "reason": "Game theory relies on Bayesian updating to model beliefs about opponents' strategies"
-    },
-    {
-      "source": "game-theory",
       "target": "recursion",
       "reason": "Strategic reasoning is recursive: I think that you think that I think..."
     }
