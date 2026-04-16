@@ -84,6 +84,26 @@ Edit `crosslinks.json` to define connections between your posts:
 
 The `reason` field is optional documentation for yourself.
 
+### Supported title formats
+
+The parser is flexible about how you title posts. The slug always comes
+from just the **model name** — subtitles and the domain suffix are
+stripped so crosslinks stay stable even if you reword the subtitle later.
+
+| Title format                         | Model (slug)      | Domain     |
+| ------------------------------------ | ----------------- | ---------- |
+| `Kelly criterion - Economics`        | `kelly-criterion` | Economics  |
+| `Game Theory: Figure Out the Game`   | `game-theory`     | Misc       |
+| `Game Theory: Figure Out... - Logic` | `game-theory`     | Logic      |
+| `Cost-Benefit Analysis - Economics`  | `cost-benefit-analysis` | Economics |
+
+Rules:
+- Domain = text after the last **space-padded** dash (` - `, ` – `, ` — `).
+  Spaces on both sides are required, so `Cost-Benefit` isn't split.
+- A colon introduces a **subtitle**; everything after the first `:` in
+  the model portion is dropped for display and slug purposes.
+- Posts without a domain fall into a `Misc` hub.
+
 ## Embedding in Your Website
 
 ### Option 1: Direct embed (iframe)

@@ -31,13 +31,36 @@ def parse_date(date_str: str) -> str:
 
 def split_title(title: str) -> tuple[str, str]:
     """
-    Split title into (model, domain).
-    Accepts 'Model - Domain' / 'Model – Domain' / 'Model — Domain'.
+    Split a post title into (model, domain).
+
+    Supported formats (all produce a clean slug from just the model name):
+        'Model'                             -> ('Model', 'Misc')
+        'Model - Domain'                    -> ('Model', 'Domain')      (also – or —)
+        'Model: Subtitle'                   -> ('Model', 'Misc')
+        'Model: Subtitle - Domain'          -> ('Model', 'Domain')
+
+    Rules:
+        - The domain is whatever follows the LAST space-padded dash-like
+          separator (' - ', ' – ', ' — '). Requiring whitespace on both
+          sides avoids splitting hyphenated model names like 'Cost-Benefit'.
+        - A colon introduces a subtitle; everything after the first ':' in
+          the model portion is dropped so the slug stays short and stable.
     """
-    m = re.match(r"^(.*?)\s*[\-–—]\s*(.+)$", title.strip())
+    s = title.strip()
+    domain = "Misc"
+
+    # Peel off a trailing ' - Domain' if present (last occurrence, no
+    # dash-like chars inside the domain itself).
+    m = re.search(r"\s+[\-–—]\s+([^\-–—]+)$", s)
     if m:
-        return m.group(1).strip(), m.group(2).strip()
-    return title.strip(), "Misc"
+        domain = m.group(1).strip()
+        s = s[:m.start()].strip()
+
+    # Drop any subtitle after a colon so 'Game Theory: Figure Out...'
+    # becomes just 'Game Theory' for display and slug purposes.
+    s = s.split(":", 1)[0].strip()
+
+    return s, domain
 
 
 def slugify(name: str) -> str:
