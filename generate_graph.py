@@ -449,14 +449,15 @@ def generate_html(posts: list[dict], crosslinks: list[dict]) -> str:
         }
 
         .link.cross-link {
-            stroke-dasharray: 4, 4;
-            stroke-width: 1;
-            opacity: 0.5;
+            stroke-dasharray: 3, 5;
+            stroke-width: 0.75;
+            opacity: 0.18;
         }
 
         .link.highlighted {
             stroke: var(--link-hover);
             stroke-width: 2.5;
+            opacity: 1;
         }
 
         .node {
@@ -600,13 +601,13 @@ def generate_html(posts: list[dict], crosslinks: list[dict]) -> str:
         const simulation = d3.forceSimulation(nodes)
             .force('link', d3.forceLink(links)
                 .id(d => d.id)
-                .distance(d => d.type === 'hub-link' ? 120 : 180)
-                .strength(d => d.type === 'hub-link' ? 0.8 : 0.2))
+                .distance(d => d.type === 'hub-link' ? 130 : 240)
+                .strength(d => d.type === 'hub-link' ? 0.85 : 0.08))
             .force('charge', d3.forceManyBody()
-                .strength(d => d.type === 'hub' ? -600 : -300))
+                .strength(d => d.type === 'hub' ? -700 : -500))
             .force('center', d3.forceCenter(0, 0))
             .force('collision', d3.forceCollide()
-                .radius(d => d.radius + 40))
+                .radius(d => d.radius + 55))
             .velocityDecay(0.4)
             .alphaDecay(0.02);
 
@@ -631,20 +632,24 @@ def generate_html(posts: list[dict], crosslinks: list[dict]) -> str:
                 .on('end', dragended));
 
         const defs = svg.append('defs');
-        const filter = defs.append('filter')
-            .attr('id', 'glow')
-            .attr('x', '-50%')
-            .attr('y', '-50%')
-            .attr('width', '200%')
-            .attr('height', '200%');
 
-        filter.append('feGaussianBlur')
-            .attr('stdDeviation', '3')
-            .attr('result', 'coloredBlur');
+        function makeGlow(id, stdDeviation) {
+            const filter = defs.append('filter')
+                .attr('id', id)
+                .attr('x', '-50%')
+                .attr('y', '-50%')
+                .attr('width', '200%')
+                .attr('height', '200%');
+            filter.append('feGaussianBlur')
+                .attr('stdDeviation', stdDeviation)
+                .attr('result', 'coloredBlur');
+            const feMerge = filter.append('feMerge');
+            feMerge.append('feMergeNode').attr('in', 'coloredBlur');
+            feMerge.append('feMergeNode').attr('in', 'SourceGraphic');
+        }
 
-        const feMerge = filter.append('feMerge');
-        feMerge.append('feMergeNode').attr('in', 'coloredBlur');
-        feMerge.append('feMergeNode').attr('in', 'SourceGraphic');
+        makeGlow('glow-hub', '3');
+        makeGlow('glow-post', '1.5');
 
         node.append('circle')
             .attr('class', 'node-circle')
@@ -654,7 +659,7 @@ def generate_html(posts: list[dict], crosslinks: list[dict]) -> str:
             .attr('stroke-width', 2)
             .attr('stroke-opacity', 0.6)
             .attr('fill-opacity', d => d.type === 'hub' ? 0.9 : 0.85)
-            .style('filter', 'url(#glow)');
+            .style('filter', d => d.type === 'hub' ? 'url(#glow-hub)' : 'url(#glow-post)');
 
         node.filter(d => d.type === 'hub')
             .append('rect')
