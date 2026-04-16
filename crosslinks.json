@@ -12,9 +12,24 @@
       "reason": "Both deal with decision-making under uncertainty"
     },
     {
+      "source": "kelly-criterion",
+      "target": "distributions",
+      "reason": "Kelly requires the probability distribution of outcomes; fat tails break the formula"
+    },
+    {
+      "source": "kelly-criterion",
+      "target": "game-theory",
+      "reason": "Kelly is optimal strategy for a one-player game against nature"
+    },
+    {
       "source": "compound-interest",
       "target": "big-debt-cycle",
       "reason": "Compound interest drives debt accumulation in economic cycles"
+    },
+    {
+      "source": "compound-interest",
+      "target": "recursion",
+      "reason": "Compound interest is the textbook recursive formula: f(n) = f(n-1) * (1+r)"
     },
     {
       "source": "entropy",
@@ -32,9 +47,24 @@
       "reason": "Both explain human behavior and decision-making"
     },
     {
-      "source": "recursion",
-      "target": "entropy",
-      "reason": "Recursive structures appear in information theory and compression"
+      "source": "the-power-of-incentives",
+      "target": "game-theory",
+      "reason": "Games are incentive structures; incentives determine the strategies players choose"
+    },
+    {
+      "source": "the-power-of-incentives",
+      "target": "big-debt-cycle",
+      "reason": "Debt cycles are driven by incentive structures like cheap credit and moral hazard"
+    },
+    {
+      "source": "bayes-theorem",
+      "target": "prospect-theory",
+      "reason": "Prospect theory documents how humans violate Bayesian updating via base rate neglect"
+    },
+    {
+      "source": "distributions",
+      "target": "prospect-theory",
+      "reason": "Loss aversion and overweighting of tail events connect to fat-tailed distributions"
     },
     {
       "source": "game-theory",
@@ -43,4 +73,3 @@
     }
   ]
 }
-
